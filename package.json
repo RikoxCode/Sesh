@@ -1,0 +1,30 @@
+{
+  "name": "sesh",
+  "version": "1.0.0",
+  "description": "Sesh is a mono-repo for managing PA/QV documentation. It includes setup for ESLint, Prettier, Husky hooks, branching rules, GitHub workflows (CI/CD), and issue/PR templates. This serves as the foundation for future implementations (React/Laravel) with Keycloak integration.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepare": "husky install",
+    "lint": "npm run lint:js && npm run lint:md",
+    "lint:js": "eslint . --ext .js,.cjs,.mjs,.ts,.tsx",
+    "lint:md": "markdownlint **/*.md --ignore node_modules",
+    "format": "prettier -w .",
+    "format:check": "prettier -c ."
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^24.6.0",
+    "eslint": "^9.36.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-import": "^2.32.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.2.3",
+    "markdownlint": "^0.38.0",
+    "markdownlint-cli": "^0.45.0",
+    "prettier": "^3.6.2",
+    "typescript": "^5.9.2"
+  }
+}
