@@ -6,7 +6,7 @@
 @layer base {
   /* Default = Light (per :root) + optional über data-theme steuerbar */
   :root,
-  [data-theme="light"] {
+  [data-theme='light'] {
     /* Core Hex */
     --primary: #167985;
     --secondary: #42a379;
@@ -25,9 +25,9 @@
     --destructive-foreground: #ffffff;
 
     /* RGB-Kanäle (für alpha in Tailwind: rgb(var(--x-rgb)/<alpha>)) */
-    --primary-rgb: 22 121 133;    /* #167985 */
-    --secondary-rgb: 66 163 121;  /* #42A379 */
-    --accent-rgb: 47 57 65;       /* #2F3941 */
+    --primary-rgb: 22 121 133; /* #167985 */
+    --secondary-rgb: 66 163 121; /* #42A379 */
+    --accent-rgb: 47 57 65; /* #2F3941 */
 
     --background-rgb: 255 255 255;
     --foreground-rgb: 17 25 40;
@@ -61,7 +61,7 @@
   }
 
   /* Dark Theme */
-  [data-theme="dark"] {
+  [data-theme='dark'] {
     --primary: #249ba8;
     --secondary: #59c093;
     --accent: #38434d;
@@ -78,9 +78,9 @@
     --destructive: #f43f5e;
     --destructive-foreground: #111928;
 
-    --primary-rgb: 36 155 168;    /* #249BA8 */
-    --secondary-rgb: 89 192 147;  /* #59C093 */
-    --accent-rgb: 56 67 77;       /* #38434D */
+    --primary-rgb: 36 155 168; /* #249BA8 */
+    --secondary-rgb: 89 192 147; /* #59C093 */
+    --accent-rgb: 56 67 77; /* #38434D */
 
     --background-rgb: 15 19 26;
     --foreground-rgb: 248 250 252;
