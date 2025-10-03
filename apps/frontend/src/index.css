@@ -2,61 +2,139 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Theme + Tokens mit Hex UND RGB-Kanälen, State- und Surface-Varianten */
 @layer base {
-  /* LIGHT */
-  :root {
-    /* Hex (optional, falls du irgendwo direkt Hex brauchst) */
-    --primary-hex: #167985;
-    --secondary-hex: #42a379;
-    --accent-hex: #2f3941;
+  /* Default = Light (per :root) + optional über data-theme steuerbar */
+  :root,
+  [data-theme='light'] {
+    /* Core Hex */
+    --primary: #167985;
+    --secondary: #42a379;
+    --accent: #2f3941;
 
-    /* RGB-Kanäle (für Tailwind mit /<alpha-value>) */
-    --primary: 22 121 133; /* #167985 */
-    --secondary: 66 163 121; /* #42A379 */
-    --accent: 47 57 65; /* #2F3941 */
+    --background: #ffffff;
+    --foreground: #111928;
+    --card: #ffffff;
+    --card-foreground: #111928;
+    --muted: #f0f5fa;
+    --muted-foreground: #6e788c;
+    --border: #e1e6f0;
+    --input: #e1e6f0;
+    --ring: #167985;
+    --destructive: #dc2626;
+    --destructive-foreground: #ffffff;
 
-    /* Neutrals etc. (kannst du lassen wie gehabt) */
-    --background: 255 255 255;
-    --foreground: 17 25 40;
-    --card: 255 255 255;
-    --card-foreground: 17 25 40;
-    --muted: 240 245 250;
-    --muted-foreground: 110 120 140;
-    --border: 225 230 240;
-    --input: 225 230 240;
-    --ring: 22 121 133; /* Ring in Primary */
-    --destructive: 220 38 38;
-    --destructive-foreground: 255 255 255;
+    /* RGB-Kanäle (für alpha in Tailwind: rgb(var(--x-rgb)/<alpha>)) */
+    --primary-rgb: 22 121 133; /* #167985 */
+    --secondary-rgb: 66 163 121; /* #42A379 */
+    --accent-rgb: 47 57 65; /* #2F3941 */
+
+    --background-rgb: 255 255 255;
+    --foreground-rgb: 17 25 40;
+    --card-rgb: 255 255 255;
+    --card-foreground-rgb: 17 25 40;
+    --muted-rgb: 240 245 250;
+    --muted-foreground-rgb: 110 120 140;
+    --border-rgb: 225 230 240;
+    --input-rgb: 225 230 240;
+    --ring-rgb: 22 121 133;
+    --destructive-rgb: 220 38 38;
+    --destructive-foreground-rgb: 255 255 255;
+
+    /* State Tokens via color-mix */
+    --primary-hover: color-mix(in srgb, var(--primary) 90%, white);
+    --primary-active: color-mix(in srgb, var(--primary) 85%, black);
+    --border-strong: color-mix(in srgb, var(--border) 80%, black);
+
+    /* Surfaces (semantische Ebenen) */
+    --surface-1: var(--card);
+    --surface-2: color-mix(in srgb, var(--surface-1) 92%, var(--accent));
+    --surface-3: color-mix(in srgb, var(--surface-1) 85%, var(--accent));
+
+    /* Fokus-Ring */
+    --ring-color: var(--ring);
+    --ring-offset: var(--background);
+
+    /* Overlays (praktische Alphas) */
+    --overlay-08: rgb(var(--accent-rgb) / 0.08);
+    --overlay-12: rgb(var(--accent-rgb) / 0.12);
   }
 
-  /* DARK */
-  .dark {
-    --primary-hex: #249ba8;
-    --secondary-hex: #59c093;
-    --accent-hex: #38434d;
+  /* Dark Theme */
+  [data-theme='dark'] {
+    --primary: #249ba8;
+    --secondary: #59c093;
+    --accent: #38434d;
 
-    --primary: 36 155 168; /* #249BA8 */
-    --secondary: 89 192 147; /* #59C093 */
-    --accent: 56 67 77; /* #38434D */
+    --background: #0f131a;
+    --foreground: #f8fafc;
+    --card: #12161e;
+    --card-foreground: #f8fafc;
+    --muted: #232a34;
+    --muted-foreground: #aab4c3;
+    --border: #232a34;
+    --input: #232a34;
+    --ring: #249ba8;
+    --destructive: #f43f5e;
+    --destructive-foreground: #111928;
 
-    --background: 15 19 26; /* sehr dunkles Blau-Slate */
-    --foreground: 248 250 252;
-    --card: 18 22 30;
-    --card-foreground: 248 250 252;
-    --muted: 35 42 52;
-    --muted-foreground: 170 180 195;
-    --border: 35 42 52;
-    --input: 35 42 52;
-    --ring: 36 155 168;
-    --destructive: 244 63 94;
-    --destructive-foreground: 17 25 40;
+    --primary-rgb: 36 155 168; /* #249BA8 */
+    --secondary-rgb: 89 192 147; /* #59C093 */
+    --accent-rgb: 56 67 77; /* #38434D */
+
+    --background-rgb: 15 19 26;
+    --foreground-rgb: 248 250 252;
+    --card-rgb: 18 22 30;
+    --card-foreground-rgb: 248 250 252;
+    --muted-rgb: 35 42 52;
+    --muted-foreground-rgb: 170 180 195;
+    --border-rgb: 35 42 52;
+    --input-rgb: 35 42 52;
+    --ring-rgb: 36 155 168;
+    --destructive-rgb: 244 63 94;
+    --destructive-foreground-rgb: 17 25 40;
+
+    --primary-hover: color-mix(in srgb, var(--primary) 88%, white);
+    --primary-active: color-mix(in srgb, var(--primary) 80%, black);
+    --border-strong: color-mix(in srgb, var(--border) 80%, white);
+
+    --surface-1: var(--card);
+    --surface-2: color-mix(in srgb, var(--surface-1) 92%, white);
+    --surface-3: color-mix(in srgb, var(--surface-1) 85%, white);
+
+    --ring-color: var(--ring);
+    --ring-offset: var(--background);
+
+    --overlay-08: rgb(var(--accent-rgb) / 0.08);
+    --overlay-12: rgb(var(--accent-rgb) / 0.12);
   }
 
   /* Basis-Anwendung */
   html {
-    /* Wichtig: hier jetzt rgb(...) statt hsl(...) */
-    --bg: rgb(var(--background));
-    --fg: rgb(var(--foreground));
+    --bg: var(--background);
+    --fg: var(--foreground);
     @apply bg-[var(--bg)] text-[var(--fg)];
+  }
+}
+
+/* Optionale Komponenten/Utilities */
+@layer components {
+  /* Wiederverwendbarer Fokus-Ring */
+  .focus-ring {
+    @apply focus:outline-none focus-visible:ring-2
+    focus-visible:ring-[var(--ring-color)]
+    focus-visible:ring-offset-2
+    focus-visible:ring-offset-[var(--ring-offset)];
+  }
+}
+
+@layer utilities {
+  /* Bewegung reduzieren respektieren */
+  @media (prefers-reduced-motion: reduce) {
+    .no-motion {
+      transition: none !important;
+      animation: none !important;
+      scroll-behavior: auto !important;
+    }
   }
 }
