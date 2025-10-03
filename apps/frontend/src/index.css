@@ -1,0 +1,62 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  /* LIGHT */
+  :root {
+    /* Hex (optional, falls du irgendwo direkt Hex brauchst) */
+    --primary-hex: #167985;
+    --secondary-hex: #42A379;
+    --accent-hex: #2F3941;
+
+    /* RGB-Kanäle (für Tailwind mit /<alpha-value>) */
+    --primary: 22 121 133;     /* #167985 */
+    --secondary: 66 163 121;   /* #42A379 */
+    --accent: 47 57 65;        /* #2F3941 */
+
+    /* Neutrals etc. (kannst du lassen wie gehabt) */
+    --background: 255 255 255;
+    --foreground: 17 25 40;
+    --card: 255 255 255;
+    --card-foreground: 17 25 40;
+    --muted: 240 245 250;
+    --muted-foreground: 110 120 140;
+    --border: 225 230 240;
+    --input: 225 230 240;
+    --ring: 22 121 133;        /* Ring in Primary */
+    --destructive: 220 38 38;
+    --destructive-foreground: 255 255 255;
+  }
+
+  /* DARK */
+  .dark {
+    --primary-hex: #249BA8;
+    --secondary-hex: #59C093;
+    --accent-hex: #38434D;
+
+    --primary: 36 155 168;     /* #249BA8 */
+    --secondary: 89 192 147;   /* #59C093 */
+    --accent: 56 67 77;        /* #38434D */
+
+    --background: 15 19 26;    /* sehr dunkles Blau-Slate */
+    --foreground: 248 250 252;
+    --card: 18 22 30;
+    --card-foreground: 248 250 252;
+    --muted: 35 42 52;
+    --muted-foreground: 170 180 195;
+    --border: 35 42 52;
+    --input: 35 42 52;
+    --ring: 36 155 168;
+    --destructive: 244 63 94;
+    --destructive-foreground: 17 25 40;
+  }
+
+  /* Basis-Anwendung */
+  html {
+    /* Wichtig: hier jetzt rgb(...) statt hsl(...) */
+    --bg: rgb(var(--background));
+    --fg: rgb(var(--foreground));
+    @apply bg-[var(--bg)] text-[var(--fg)];
+  }
+}
