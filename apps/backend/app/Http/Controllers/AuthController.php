@@ -11,6 +11,16 @@ use Tymon\JWTAuth\Exceptions\JWTException;
 
 class AuthController extends Controller
 {
+    public function getPermissions()
+    {
+        $user = Auth::user();
+        if (!$user) {
+            return response()->json(['error' => 'User not found'], 404);
+        }
+
+        $permissions = $user->getPermissionNames();
+        return response()->json(['permissions' => $permissions]);
+    }
     public function register(Request $request)
     {
         $request->validate([
