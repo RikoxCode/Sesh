@@ -10,8 +10,5 @@ export type NavItem = {
 };
 
 export type SidebarProps = {
-  active?: RouteKey;
-  onNavigate?: (key: RouteKey) => void;
-  logoUrl?: string; // default: /images/logo.png
-  user?: { name: string; role?: string };
+  logoUrl?: string;
 };

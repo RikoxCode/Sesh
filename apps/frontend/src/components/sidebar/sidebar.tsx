@@ -1,12 +1,11 @@
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
+import { Link, useRouterState } from '@tanstack/react-router';
 import { RouteKey } from './SidebarEnum';
 import type { NavItem, SidebarProps } from './ISidebar';
-
+import { useUserStore } from '../../stores/userStore';
 import {
   LayoutDashboard,
   Info,
-  Users,
-  Shield,
   ScanLine,
   Wrench,
   SlidersHorizontal,
@@ -15,13 +14,11 @@ import {
 } from 'lucide-react';
 
 const navItems: NavItem[] = [
-  { key: RouteKey.Dashboard, label: 'Dashboard', icon: LayoutDashboard },
-  { key: RouteKey.Daily, label: 'Daily', icon: Info },
-  { key: RouteKey.Users, label: 'User', icon: Users },
-  { key: RouteKey.Info, label: 'Information', icon: Shield },
-  { key: RouteKey.Scan, label: 'Scan', icon: ScanLine },
-  { key: RouteKey.Test, label: 'Test', icon: Wrench },
-  { key: RouteKey.Sections, label: 'Edit Sections', icon: SlidersHorizontal },
+  { key: RouteKey.Dashboard, label: 'Dashboard', icon: LayoutDashboard, href: '/' },
+  { key: RouteKey.Daily, label: 'Daily', icon: Info, href: '/daily' },
+  { key: RouteKey.Scan, label: 'Scan', icon: ScanLine, href: '/scan' },
+  { key: RouteKey.Test, label: 'Test', icon: Wrench, href: '/test' },
+  { key: RouteKey.Sections, label: 'Edit Sections', icon: SlidersHorizontal, href: '/sections' },
 ];
 
 const baseItem =
@@ -31,16 +28,36 @@ const baseItem =
 const labelShow =
   'pointer-events-none origin-left scale-0 opacity-0 transition-all duration-200 group-hover:scale-100 group-hover:opacity-100';
 
-const Sidebar: FC<SidebarProps> = ({ active, onNavigate, logoUrl = '/images/logo.png', user }) => {
-  const userName = user?.name ?? 'Gianluca Barbieri';
-  const userRole = user?.role ?? 'Lernender';
+const Sidebar: FC<SidebarProps> = ({ logoUrl = '/images/logo.png' }) => {
+  const { user, fetchUser } = useUserStore();
+  const router = useRouterState();
+  const currentPath = router.location.pathname;
 
-  const renderItem = ({ key, label, icon: Icon, sublabel }: NavItem) => {
+  useEffect(() => {
+    if (!user) {
+      fetchUser();
+    }
+  }, [user, fetchUser]);
+
+  const getActiveKey = (): RouteKey | null => {
+    if (currentPath === '/') return RouteKey.Dashboard;
+    if (currentPath === '/profile') return RouteKey.Profile;
+    if (currentPath === '/settings') return RouteKey.Settings;
+    if (currentPath.startsWith('/daily')) return RouteKey.Daily;
+    if (currentPath.startsWith('/scan')) return RouteKey.Scan;
+    if (currentPath.startsWith('/test')) return RouteKey.Test;
+    if (currentPath.startsWith('/sections')) return RouteKey.Sections;
+    return null;
+  };
+
+  const active = getActiveKey();
+
+  const renderItem = ({ key, label, icon: Icon, sublabel, href }: NavItem & { href: string }) => {
     const isActive = active === key;
     return (
-      <button
+      <Link
         key={key}
-        onClick={() => onNavigate?.(key)}
+        to={href}
         title={label}
         aria-current={isActive ? 'page' : undefined}
         className={
@@ -56,7 +73,7 @@ const Sidebar: FC<SidebarProps> = ({ active, onNavigate, logoUrl = '/images/logo
           <div>{label}</div>
           {sublabel && <div className="text-xs text-white/80">{sublabel}</div>}
         </div>
-      </button>
+      </Link>
     );
   };
 
@@ -70,10 +87,10 @@ const Sidebar: FC<SidebarProps> = ({ active, onNavigate, logoUrl = '/images/logo
     >
       <div className="flex h-full flex-col text-white">
         {/* Brand */}
-        <button className={baseItem + ' px-3 py-4'}>
+        <Link to="/" className={baseItem + ' px-3 py-4'}>
           <div className="grid h-10 w-10 place-items-center rounded-lg overflow-hidden shrink-0">
             <img
-              src={logoUrl} // /images/logo.png aus /public
+              src={logoUrl}
               alt="Sesh Logo"
               className="block h-10 w-10 object-contain select-none pointer-events-none"
             />
@@ -81,22 +98,30 @@ const Sidebar: FC<SidebarProps> = ({ active, onNavigate, logoUrl = '/images/logo
           <div className={`${labelShow} text-left text-xl font-bold`}>
             <div>Sesh</div>
           </div>
-        </button>
+        </Link>
 
         {/* Main nav */}
-        <nav className="flex-1 space-y-1 px-2">{navItems.map((it) => renderItem(it))}</nav>
+        <nav className="flex-1 space-y-1 px-2">
+          {navItems.map((it) => renderItem({ ...it, href: it.href! }))}
+        </nav>
 
         {/* Bottom actions */}
         <div className="px-2 pb-3 pt-2 space-y-1">
-          {/* Settings as selectable item */}
-          {renderItem({ key: RouteKey.Settings, label: 'Settings', icon: Settings })}
+          {/* Settings */}
+          {renderItem({
+            key: RouteKey.Settings,
+            label: 'Einstellungen',
+            icon: Settings,
+            href: '/settings',
+          })}
 
-          {/* Profile as normal item (kein Card) */}
+          {/* Profile */}
           {renderItem({
             key: RouteKey.Profile,
-            label: userName,
-            sublabel: userRole,
+            label: user ? `${user.first_name} ${user.last_name}` : 'Profil',
+            sublabel: user?.email,
             icon: UserCircle2,
+            href: '/profile',
           })}
         </div>
       </div>
