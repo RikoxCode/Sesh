@@ -1,11 +1,11 @@
 import { useState } from 'react'
 import { useAuthStore } from '../stores/authStore'
 import Brand from '../components/login/Brand'
-import TextField from '../components/login/TextField'
+import TextField from '../components/ui/TextField'
 import PasswordField from '../components/login/PasswordField'
 import SubmitButton from '../components/login/SubmitButton'
-import FormError from '../components/login/FormError'
-import ThemeToggle from '../components/login/ThemeToggle'
+import FormError from '../components/ui/FormError'
+import ThemeToggle from '../components/ui/ThemeToggle'
 
 export default function LoginView() {
   const login = useAuthStore((s) => s.login)
