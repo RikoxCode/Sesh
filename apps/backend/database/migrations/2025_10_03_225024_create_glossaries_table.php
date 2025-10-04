@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('glossary', function (Blueprint $table) {
+        Schema::create('glossaries', function (Blueprint $table) {
             $table->char('id', 36)->primary();
             $table->char('project_id', 36);
             $table->string('term');
@@ -27,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('glossary');
+        Schema::dropIfExists('glossaries');
     }
 };

@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('user_meta', function (Blueprint $table) {
+        Schema::create('user_metas', function (Blueprint $table) {
             $table->char('id', 36)->primary();
             $table->char('user_id', 36);
             $table->string('meta_key');
@@ -27,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('user_meta');
+        Schema::dropIfExists('user_metas');
     }
 };
