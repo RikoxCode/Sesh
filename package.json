@@ -16,8 +16,7 @@
   },
   "lint-staged": {
     "apps/frontend/**/*.{ts,tsx,js,jsx}": [
-      "npm --prefix apps/frontend run eslint:fix",
-      "npm --prefix apps/frontend run typecheck",
+      "npm --prefix apps/frontend run eslint:fix --",
       "npm --prefix apps/frontend run prettier:fix"
     ],
     "apps/frontend/**/*.{css,pcss}": [

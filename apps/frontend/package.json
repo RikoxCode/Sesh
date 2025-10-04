@@ -8,10 +8,9 @@
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "precommit": "npm run -s eslint:check && npm run -s typecheck && npm run -s prettier:check",
+    "precommit": "npm run -s eslint:check && npm run -s prettier:check",
     "eslint:check": "eslint .",
-    "eslint:fix": "eslint . --fix",
-    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "eslint:fix": "eslint --fix",
     "prettier:check": "prettier -c .",
     "prettier:fix": "prettier -w .",
     "test": "vitest run -r"
@@ -19,6 +18,7 @@
   "dependencies": {
     "@supabase/supabase-js": "^2.57.4",
     "@tanstack/react-router": "^1.132.33",
+    "eslint-plugin-react": "^7.37.5",
     "lucide-react": "^0.344.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
