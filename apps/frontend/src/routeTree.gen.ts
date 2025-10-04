@@ -9,68 +9,69 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root';
-import { Route as LoginRouteImport } from './routes/_authenticated/login';
+import { Route as ProfileRouteImport } from './routes/profile';
 import { Route as AuthenticatedRouteImport } from './routes/_authenticated';
-import { Route as AuthenticatedIndexRouteImport } from './routes/_notauthenticated/index';
-import { Route as AuthenticatedProfileRouteImport } from './routes/_notauthenticated/profile';
+import { Route as IndexRouteImport } from './routes/index';
+import { Route as AuthenticatedLoginRouteImport } from './routes/_authenticated/login';
 
-const LoginRoute = LoginRouteImport.update({
-  id: '/login',
-  path: '/login',
+const ProfileRoute = ProfileRouteImport.update({
+  id: '/profile',
+  path: '/profile',
   getParentRoute: () => rootRouteImport,
 } as any);
 const AuthenticatedRoute = AuthenticatedRouteImport.update({
   id: '/_authenticated',
   getParentRoute: () => rootRouteImport,
 } as any);
-const AuthenticatedIndexRoute = AuthenticatedIndexRouteImport.update({
+const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => AuthenticatedRoute,
+  getParentRoute: () => rootRouteImport,
 } as any);
-const AuthenticatedProfileRoute = AuthenticatedProfileRouteImport.update({
-  id: '/profile',
-  path: '/profile',
+const AuthenticatedLoginRoute = AuthenticatedLoginRouteImport.update({
+  id: '/login',
+  path: '/login',
   getParentRoute: () => AuthenticatedRoute,
 } as any);
 
 export interface FileRoutesByFullPath {
-  '/login': typeof LoginRoute;
-  '/profile': typeof AuthenticatedProfileRoute;
-  '/': typeof AuthenticatedIndexRoute;
+  '/': typeof IndexRoute;
+  '/profile': typeof ProfileRoute;
+  '/login': typeof AuthenticatedLoginRoute;
 }
 export interface FileRoutesByTo {
-  '/login': typeof LoginRoute;
-  '/profile': typeof AuthenticatedProfileRoute;
-  '/': typeof AuthenticatedIndexRoute;
+  '/': typeof IndexRoute;
+  '/profile': typeof ProfileRoute;
+  '/login': typeof AuthenticatedLoginRoute;
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport;
+  '/': typeof IndexRoute;
   '/_authenticated': typeof AuthenticatedRouteWithChildren;
-  '/login': typeof LoginRoute;
-  '/_authenticated/profile': typeof AuthenticatedProfileRoute;
-  '/_authenticated/': typeof AuthenticatedIndexRoute;
+  '/profile': typeof ProfileRoute;
+  '/_authenticated/login': typeof AuthenticatedLoginRoute;
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath;
-  fullPaths: '/login' | '/profile' | '/';
+  fullPaths: '/' | '/profile' | '/login';
   fileRoutesByTo: FileRoutesByTo;
-  to: '/login' | '/profile' | '/';
-  id: '__root__' | '/_authenticated' | '/login' | '/_authenticated/profile' | '/_authenticated/';
+  to: '/' | '/profile' | '/login';
+  id: '__root__' | '/' | '/_authenticated' | '/profile' | '/_authenticated/login';
   fileRoutesById: FileRoutesById;
 }
 export interface RootRouteChildren {
+  IndexRoute: typeof IndexRoute;
   AuthenticatedRoute: typeof AuthenticatedRouteWithChildren;
-  LoginRoute: typeof LoginRoute;
+  ProfileRoute: typeof ProfileRoute;
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/login': {
-      id: '/login';
-      path: '/login';
-      fullPath: '/login';
-      preLoaderRoute: typeof LoginRouteImport;
+    '/profile': {
+      id: '/profile';
+      path: '/profile';
+      fullPath: '/profile';
+      preLoaderRoute: typeof ProfileRouteImport;
       parentRoute: typeof rootRouteImport;
     };
     '/_authenticated': {
@@ -80,31 +81,29 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedRouteImport;
       parentRoute: typeof rootRouteImport;
     };
-    '/_authenticated/': {
-      id: '/_authenticated/';
+    '/': {
+      id: '/';
       path: '/';
       fullPath: '/';
-      preLoaderRoute: typeof AuthenticatedIndexRouteImport;
-      parentRoute: typeof AuthenticatedRoute;
+      preLoaderRoute: typeof IndexRouteImport;
+      parentRoute: typeof rootRouteImport;
     };
-    '/_authenticated/profile': {
-      id: '/_authenticated/profile';
-      path: '/profile';
-      fullPath: '/profile';
-      preLoaderRoute: typeof AuthenticatedProfileRouteImport;
+    '/_authenticated/login': {
+      id: '/_authenticated/login';
+      path: '/login';
+      fullPath: '/login';
+      preLoaderRoute: typeof AuthenticatedLoginRouteImport;
       parentRoute: typeof AuthenticatedRoute;
     };
   }
 }
 
 interface AuthenticatedRouteChildren {
-  AuthenticatedProfileRoute: typeof AuthenticatedProfileRoute;
-  AuthenticatedIndexRoute: typeof AuthenticatedIndexRoute;
+  AuthenticatedLoginRoute: typeof AuthenticatedLoginRoute;
 }
 
 const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
-  AuthenticatedProfileRoute: AuthenticatedProfileRoute,
-  AuthenticatedIndexRoute: AuthenticatedIndexRoute,
+  AuthenticatedLoginRoute: AuthenticatedLoginRoute,
 };
 
 const AuthenticatedRouteWithChildren = AuthenticatedRoute._addFileChildren(
@@ -112,8 +111,9 @@ const AuthenticatedRouteWithChildren = AuthenticatedRoute._addFileChildren(
 );
 
 const rootRouteChildren: RootRouteChildren = {
+  IndexRoute: IndexRoute,
   AuthenticatedRoute: AuthenticatedRouteWithChildren,
-  LoginRoute: LoginRoute,
+  ProfileRoute: ProfileRoute,
 };
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
