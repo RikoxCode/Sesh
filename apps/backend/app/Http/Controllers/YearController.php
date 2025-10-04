@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Year;
-use Illuminate\Http\Request;
+use App\Http\Requests\Year\StoreYearRequest;
+use App\Http\Requests\Year\UpdateYearRequest;
 
 class YearController extends Controller
 {
@@ -17,16 +18,16 @@ class YearController extends Controller
         return Year::findOrFail($id);
     }
 
-    public function store(Request $request)
+    public function store(StoreYearRequest $request)
     {
-        $year = Year::create($request->all());
+        $year = Year::create($request->validated());
         return response()->json($year, 201);
     }
 
-    public function update(Request $request, $id)
+    public function update(UpdateYearRequest $request, $id)
     {
         $year = Year::findOrFail($id);
-        $year->update($request->all());
+        $year->update($request->validated());
         return response()->json($year, 200);
     }
 

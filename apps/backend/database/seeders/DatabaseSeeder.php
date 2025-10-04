@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+
 use App\Models\{
     Year,
     User,
@@ -31,6 +32,46 @@ class DatabaseSeeder extends Seeder
         // Base data
         $years = Year::factory()->count(rand(5, 10))->create();
         $users = User::factory()->count(rand(5, 10))->create();
+
+        $admin = User::factory()->create([
+            'first_name' => 'Herr',
+            'last_name' => 'Admin',
+            'email' => 'admin@sesh.com',
+            'password' => bcrypt('password'), 
+        ]);
+
+        $apprentice = User::factory()->create([
+            'first_name' => 'Herr',
+            'last_name' => 'Lehrling',
+            'email' => 'apprentice@sesh.com',
+            'password' => bcrypt('password'),
+        ]);
+
+        $supervisor = User::factory()->create([
+            'first_name' => 'Herr',
+            'last_name' => 'Berufsausbilder',
+            'email' => 'supervisor@sesh.com',
+            'password' => bcrypt('password'),
+        ]);
+
+        $mentor = User::factory()->create([
+            'first_name' => 'Herr',
+            'last_name' => 'Praxisbildner',
+            'email' => 'mentor@sesh.com',
+            'password' => bcrypt('password'),
+        ]);
+
+        $adminUser = User::where('email', 'admin@sesh.com')->first();
+        $adminUser->assignRole('admin');
+
+        $apprenticeUser = User::where('email', 'apprentice@sesh.com')->first();
+        $apprenticeUser->assignRole('apprentice');
+
+        $supervisorUser = User::where('email', 'supervisor@sesh.com')->first();
+        $supervisorUser->assignRole('supervisor');
+
+        $mentorUser = User::where('email', 'mentor@sesh.com')->first();
+        $mentorUser->assignRole('mentor');
 
         // Projects linked to existing Years and Users
         $projects = Project::factory()

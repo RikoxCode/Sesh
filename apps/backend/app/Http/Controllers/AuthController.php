@@ -11,15 +11,15 @@ use Tymon\JWTAuth\Exceptions\JWTException;
 
 class AuthController extends Controller
 {
-    public function getPermissions()
+    private function getRole()
     {
         $user = Auth::user();
         if (!$user) {
             return response()->json(['error' => 'User not found'], 404);
         }
 
-        $permissions = $user->getPermissionNames();
-        return response()->json(['permissions' => $permissions]);
+        $role = $user->getRoleNames();
+        return response()->json(['role' => $role]);
     }
     public function register(Request $request)
     {
@@ -88,7 +88,12 @@ class AuthController extends Controller
             if (!$user) {
                 return response()->json(['error' => 'User not found'], 404);
             }
-            return response()->json($user);
+            $role = $user->getRoleNames();
+
+            return response()->json([
+                'user' => $user,
+                'role' => $role
+            ]);
         } catch (JWTException $e) {
             return response()->json(['error' => 'Failed to fetch user profile'], 500);
         }
