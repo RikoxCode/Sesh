@@ -5,12 +5,28 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "prepare": "husky",
     "lint": "npm run lint:js && npm run lint:md",
     "lint:js": "eslint apps --ext .js,.ts --no-error-on-unmatched-pattern",
     "lint:md": "markdownlint **/*.md --ignore node_modules",
     "format": "prettier -w .",
-    "format:check": "prettier -c ."
+    "format:check": "prettier -c .",
+    "prepare": "husky",
+    "precommit:frontend": "npm --prefix apps/frontend run precommit",
+    "precommit:backend": "composer --working-dir=apps/backend run precommit"
+  },
+  "lint-staged": {
+    "apps/frontend/**/*.{ts,tsx,js,jsx}": [
+      "npm --prefix apps/frontend run eslint:fix --",
+      "npm --prefix apps/frontend run prettier:fix"
+    ],
+    "apps/frontend/**/*.{css,pcss}": [
+      "npm --prefix apps/frontend run stylelint:fix",
+      "npm --prefix apps/frontend run prettier:fix"
+    ],
+    "apps/backend/**/*.php": [
+      "composer --working-dir=apps/backend pint -- --dirty",
+      "composer --working-dir=apps/backend phpstan -- --no-progress"
+    ]
   },
   "keywords": [],
   "author": "",
@@ -21,12 +37,15 @@
     "eslint": "^9.36.0",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-import": "^2.32.0",
-    "husky": "^9.1.7",
-    "lint-staged": "^16.2.3",
+    "husky": "^9.0.0",
+    "lint-staged": "^15.0.0",
     "markdownlint": "^0.38.0",
     "markdownlint-cli": "^0.45.0",
     "prettier": "^3.6.2",
     "typescript": "^5.9.2",
     "typescript-eslint": "^8.45.0"
+  },
+  "dependencies": {
+    "eslint-plugin-react": "^7.37.5"
   }
 }

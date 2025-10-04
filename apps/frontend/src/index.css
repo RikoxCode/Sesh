@@ -1,0 +1,142 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root,
+  [data-theme='light'] {
+    /* Core Hex */
+    --primary: #167985;
+    --secondary: #42a379;
+    --accent: #2f3941;
+
+    --background: #ffffff;
+    --foreground: #111928;
+    --card: #ffffff;
+    --card-foreground: #111928;
+    --muted: #f0f5fa;
+    --muted-foreground: #6e788c;
+    --border: #e1e6f0;
+    --input: #e1e6f0;
+    --ring: #167985;
+    --destructive: #dc2626;
+    --destructive-foreground: #ffffff;
+
+    /* RGB-Kanäle (für alpha in Tailwind: rgb(var(--x-rgb)/<alpha>)) */
+    --primary-rgb: 22 121 133; /* #167985 */
+    --secondary-rgb: 66 163 121; /* #42A379 */
+    --accent-rgb: 47 57 65; /* #2F3941 */
+
+    --background-rgb: 255 255 255;
+    --foreground-rgb: 17 25 40;
+    --card-rgb: 255 255 255;
+    --card-foreground-rgb: 17 25 40;
+    --muted-rgb: 240 245 250;
+    --muted-foreground-rgb: 110 120 140;
+    --border-rgb: 225 230 240;
+    --input-rgb: 225 230 240;
+    --ring-rgb: 22 121 133;
+    --destructive-rgb: 220 38 38;
+    --destructive-foreground-rgb: 255 255 255;
+
+    /* State Tokens via color-mix */
+    --primary-hover: color-mix(in srgb, var(--primary) 90%, white);
+    --primary-active: color-mix(in srgb, var(--primary) 85%, black);
+    --border-strong: color-mix(in srgb, var(--border) 80%, black);
+
+    --primary-background: rgb(
+      calc(34 + (255 - 34) * 0.2) calc(45 + (255 - 45) * 0.2) calc(67 + (255 - 67) * 0.2)
+    );
+
+    /* Surfaces (semantische Ebenen) */
+    --surface-1: var(--card);
+    --surface-2: color-mix(in srgb, var(--surface-1) 92%, var(--accent));
+    --surface-3: color-mix(in srgb, var(--surface-1) 85%, var(--accent));
+
+    /* Fokus-Ring */
+    --ring-color: var(--ring);
+    --ring-offset: var(--background);
+
+    /* Overlays (praktische Alphas) */
+    --overlay-08: rgb(var(--accent-rgb) / 0.08);
+    --overlay-12: rgb(var(--accent-rgb) / 0.12);
+  }
+
+  /* Dark Theme */
+  [data-theme='dark'] {
+    --primary: #249ba8;
+    --secondary: #59c093;
+    --accent: #38434d;
+
+    --background: #0f131a;
+    --foreground: #f8fafc;
+    --card: #12161e;
+    --card-foreground: #f8fafc;
+    --muted: #232a34;
+    --muted-foreground: #aab4c3;
+    --border: #232a34;
+    --input: #232a34;
+    --ring: #249ba8;
+    --destructive: #f43f5e;
+    --destructive-foreground: #111928;
+
+    --primary-rgb: 36 155 168; /* #249BA8 */
+    --secondary-rgb: 89 192 147; /* #59C093 */
+    --accent-rgb: 56 67 77; /* #38434D */
+
+    --background-rgb: 15 19 26;
+    --foreground-rgb: 248 250 252;
+    --card-rgb: 18 22 30;
+    --card-foreground-rgb: 248 250 252;
+    --muted-rgb: 35 42 52;
+    --muted-foreground-rgb: 170 180 195;
+    --border-rgb: 35 42 52;
+    --input-rgb: 35 42 52;
+    --ring-rgb: 36 155 168;
+    --destructive-rgb: 244 63 94;
+    --destructive-foreground-rgb: 17 25 40;
+
+    --primary-hover: color-mix(in srgb, var(--primary) 88%, white);
+    --primary-active: color-mix(in srgb, var(--primary) 80%, black);
+    --border-strong: color-mix(in srgb, var(--border) 80%, white);
+
+    --primary-background: rgb(
+      calc(20 + (255 - 20) * 0.15) calc(25 + (255 - 25) * 0.15) calc(35 + (255 - 35) * 0.15)
+    );
+
+    --surface-1: var(--card);
+    --surface-2: color-mix(in srgb, var(--surface-1) 92%, white);
+    --surface-3: color-mix(in srgb, var(--surface-1) 85%, white);
+
+    --ring-color: var(--ring);
+    --ring-offset: var(--background);
+
+    --overlay-08: rgb(var(--accent-rgb) / 0.08);
+    --overlay-12: rgb(var(--accent-rgb) / 0.12);
+  }
+
+  html {
+    --bg: var(--background);
+    --fg: var(--foreground);
+    @apply bg-[var(--bg)] text-[var(--fg)];
+  }
+}
+
+@layer components {
+  .focus-ring {
+    @apply focus:outline-none focus-visible:ring-2
+    focus-visible:ring-[var(--ring-color)]
+    focus-visible:ring-offset-2
+    focus-visible:ring-offset-[var(--ring-offset)];
+  }
+}
+
+@layer utilities {
+  @media (prefers-reduced-motion: reduce) {
+    .no-motion {
+      transition: none !important;
+      animation: none !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
