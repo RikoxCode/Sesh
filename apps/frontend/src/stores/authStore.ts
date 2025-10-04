@@ -5,7 +5,7 @@ interface AuthState {
   isAuthenticated: boolean;
   token: string | null;
   login: (email: string, password: string) => Promise<void>;
-  logout: () => void;
+  logout: () => Promise<void>;
 }
 
 export const useAuthStore = create<AuthState>((set) => ({
@@ -18,9 +18,15 @@ export const useAuthStore = create<AuthState>((set) => ({
     set({ isAuthenticated: true, token });
   },
 
-  logout() {
-    localStorage.removeItem('sesh_token');
-    set({ isAuthenticated: false, token: null });
-    window.location.href = '/login';
+  async logout() {
+    try {
+      await authService.logout();
+    } catch (error) {
+      console.error('Logout error:', error);
+    } finally {
+      localStorage.removeItem('sesh_token');
+      set({ isAuthenticated: false, token: null });
+      window.location.href = '/login';
+    }
   },
 }));
