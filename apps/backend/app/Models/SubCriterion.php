@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Str;
 
 class SubCriterion extends Model
@@ -23,5 +25,17 @@ class SubCriterion extends Model
                 $subCriterion->id = (string) Str::uuid();
             }
         });
+    }
+
+    // Relationships
+
+    public function criterion(): BelongsTo
+    {
+        return $this->belongsTo(Criterion::class, 'criteria_id');
+    }
+
+    public function userSubCriteria(): HasMany
+    {
+        return $this->hasMany(UserSubCriterion::class, 'sub_criteria_id');
     }
 }

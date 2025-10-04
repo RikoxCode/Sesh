@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Str;
 
 class TimeBlock extends Model
@@ -23,5 +24,12 @@ class TimeBlock extends Model
                 $timeBlock->id = (string) Str::uuid();
             }
         });
+    }
+
+    // Relationships
+
+    public function project(): BelongsTo
+    {
+        return $this->belongsTo(Project::class);
     }
 }

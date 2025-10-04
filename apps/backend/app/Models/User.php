@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Str;
 use Spatie\Permission\Traits\HasPermissions;
 use Spatie\Permission\Traits\HasRoles;
@@ -48,5 +49,31 @@ class User extends Authenticatable implements JWTSubject
     public function getJWTCustomClaims()
     {
         return [];
+    }
+
+    // Relationships
+
+    /**
+     * Projects owned by the user.
+     */
+    public function projects(): HasMany
+    {
+        return $this->hasMany(Project::class, 'owner_id');
+    }
+
+    /**
+     * Additional metadata entries for the user.
+     */
+    public function meta(): HasMany
+    {
+        return $this->hasMany(UserMeta::class);
+    }
+
+    /**
+     * UserSubCriterion flags for this user.
+     */
+    public function userSubCriteria(): HasMany
+    {
+        return $this->hasMany(UserSubCriterion::class);
     }
 }
