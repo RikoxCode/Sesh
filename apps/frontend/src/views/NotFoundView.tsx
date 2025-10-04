@@ -1,30 +1,18 @@
-import { useNavigate } from '@tanstack/react-router';
+import { Link } from '@tanstack/react-router';
+import NotFoundIllustration from '../components/ui/NotFoundIllustration';
 
 export default function NotFoundView() {
-  const navigate = useNavigate();
-
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen text-[var(--foreground)]">
-      {/* Illustration */}
-      <div>
-        <img
-          src="illustrations/file_search.svg"
-          alt="Site not found illustration where files are searched but not found"
-          className="h-64 w-64 object-contain"
-        />
-      </div>
+    <div className="flex flex-col items-center justify-center min-h-[calc(100vh-3rem)] text-[var(--foreground)]">
+      <NotFoundIllustration />
 
-      {/* Text */}
       <div className="text-center mt-6">
-        <h1 className="font-semibold text-2xl">Page not Found...</h1>
-        <p className="font-medium mt-2">
-          Please consider heading back{' '}
-          <span
-            className="text-[var(--secondary)] underline cursor-pointer"
-            onClick={() => navigate({ to: '/' })}
-          >
-            home
-          </span>
+        <h1 className="font-semibold text-2xl">Page not found</h1>
+        <p className="font-medium mt-2 text-[rgb(var(--muted-foreground-rgb))]">
+          This page does not exist.{' '}
+          <Link to="/" className="text-[var(--secondary)] underline hover:text-[var(--primary)]">
+            Go back home
+          </Link>
         </p>
       </div>
     </div>
