@@ -1,4 +1,4 @@
-import { createRootRoute, Outlet, Link } from '@tanstack/react-router'
+import { createRootRoute, Outlet, Link } from '@tanstack/react-router';
 
 function NotFound() {
   return (
@@ -7,14 +7,14 @@ function NotFound() {
       <p className="mt-2 text-[rgb(var(--muted-foreground-rgb))]">
         Die angeforderte Seite existiert nicht.
       </p>
-      <Link 
-        to="/" 
+      <Link
+        to="/"
         className="mt-6 inline-block rounded-xl bg-[var(--primary)] px-4 py-2 font-medium text-white hover:bg-[var(--primary-hover)]"
       >
         Zur Startseite
       </Link>
     </div>
-  )
+  );
 }
 
 export const Route = createRootRoute({
@@ -24,4 +24,4 @@ export const Route = createRootRoute({
     </div>
   ),
   notFoundComponent: NotFound,
-})
+});

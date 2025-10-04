@@ -1,4 +1,4 @@
-import { GraduationCap } from 'lucide-react'
+import { GraduationCap } from 'lucide-react';
 
 export default function Brand() {
   return (
@@ -8,8 +8,10 @@ export default function Brand() {
       </div>
       <div className="text-center">
         <h1 className="text-2xl font-bold tracking-tight">SESH</h1>
-        <p className="text-sm text-[rgb(var(--muted-foreground-rgb))]">Melde dich an, um fortzufahren</p>
+        <p className="text-sm text-[rgb(var(--muted-foreground-rgb))]">
+          Melde dich an, um fortzufahren
+        </p>
       </div>
     </div>
-  )
+  );
 }

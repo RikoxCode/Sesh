@@ -1,22 +1,22 @@
-import { Moon, Sun } from 'lucide-react'
-import { useEffect, useState } from 'react'
+import { Moon, Sun } from 'lucide-react';
+import { useEffect, useState } from 'react';
 
 export default function ThemeToggle() {
-  const [theme, setTheme] = useState<'light' | 'dark'>(() =>
-    (document.documentElement.getAttribute('data-theme') as 'light' | 'dark') || 'light'
-  )
+  const [theme, setTheme] = useState<'light' | 'dark'>(
+    () => (document.documentElement.getAttribute('data-theme') as 'light' | 'dark') || 'light',
+  );
 
   useEffect(() => {
-    document.documentElement.setAttribute('data-theme', theme)
-    localStorage.setItem('sesh-theme', theme)
-  }, [theme])
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('sesh-theme', theme);
+  }, [theme]);
 
   useEffect(() => {
-    const saved = localStorage.getItem('sesh-theme') as 'light' | 'dark' | null
-    if (saved) setTheme(saved)
-  }, [])
+    const saved = localStorage.getItem('sesh-theme') as 'light' | 'dark' | null;
+    if (saved) setTheme(saved);
+  }, []);
 
-  const toggle = () => setTheme((t) => (t === 'light' ? 'dark' : 'light'))
+  const toggle = () => setTheme((t) => (t === 'light' ? 'dark' : 'light'));
 
   return (
     <button
@@ -29,5 +29,5 @@ export default function ThemeToggle() {
       {theme === 'light' ? <Moon className="h-4 w-4" /> : <Sun className="h-4 w-4" />}
       <span className="hidden sm:block">{theme === 'light' ? 'Dark' : 'Light'} Mode</span>
     </button>
-  )
+  );
 }

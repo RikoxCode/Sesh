@@ -1,12 +1,14 @@
-import { LogOut } from 'lucide-react'
-import { useAuthStore } from '../stores/authStore'
+import { LogOut } from 'lucide-react';
+import { useAuthStore } from '../stores/authStore';
 
 export default function HomeView() {
-  const { isAuthenticated, logout } = useAuthStore()
+  const { isAuthenticated, logout } = useAuthStore();
 
   return (
     <div className="mx-auto flex min-h-screen max-w-3xl flex-col items-center justify-center gap-6 px-6 text-center">
-      <h1 className="text-3xl font-semibold">Willkommen bei <span className="text-[var(--primary)]">SESH</span></h1>
+      <h1 className="text-3xl font-semibold">
+        Willkommen bei <span className="text-[var(--primary)]">SESH</span>
+      </h1>
       <p className="text-[rgb(var(--muted-foreground-rgb))]">
         {isAuthenticated
           ? 'Du bist (fake) eingeloggt. Backend folgt später.'
@@ -31,5 +33,5 @@ export default function HomeView() {
         )}
       </div>
     </div>
-  )
+  );
 }

@@ -1,35 +1,39 @@
-import { useState } from 'react'
-import { useNavigate } from '@tanstack/react-router'
-import { useAuthStore } from '../stores/authStore'
-import Brand from '../components/login/Brand'
-import TextField from '../components/ui/TextField'
-import PasswordField from '../components/login/PasswordField'
-import SubmitButton from '../components/login/SubmitButton'
-import FormError from '../components/ui/FormError'
-import ThemeToggle from '../components/ui/ThemeToggle'
+import { useState } from 'react';
+import { useNavigate } from '@tanstack/react-router';
+import { useAuthStore } from '../stores/authStore';
+import Brand from '../components/login/Brand';
+import TextField from '../components/ui/TextField';
+import PasswordField from '../components/login/PasswordField';
+import SubmitButton from '../components/login/SubmitButton';
+import FormError from '../components/ui/FormError';
+import ThemeToggle from '../components/ui/ThemeToggle';
 
 export default function LoginView() {
-  const login = useAuthStore((s) => s.login)
-  const navigate = useNavigate()
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [error, setError] = useState('')
-  const [loading, setLoading] = useState(false)
+  const login = useAuthStore((s) => s.login);
+  const navigate = useNavigate();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setError('')
-    setLoading(true)
+    e.preventDefault();
+    setError('');
+    setLoading(true);
 
     try {
-      await login(email, password)
-      navigate({ to: '/' })
+      await login(email, password);
+      navigate({ to: '/' });
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Login fehlgeschlagen. Bitte überprüfe deine Anmeldedaten.')
+      setError(
+        err instanceof Error
+          ? err.message
+          : 'Login fehlgeschlagen. Bitte überprüfe deine Anmeldedaten.',
+      );
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-[var(--bg)] px-4">
@@ -65,5 +69,5 @@ export default function LoginView() {
         </div>
       </div>
     </div>
-  )
+  );
 }

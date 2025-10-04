@@ -1,16 +1,18 @@
-import { Lock, Eye, EyeOff } from 'lucide-react'
-import { InputHTMLAttributes, useState } from 'react'
+import { Lock, Eye, EyeOff } from 'lucide-react';
+import { InputHTMLAttributes, useState } from 'react';
 
 type Props = InputHTMLAttributes<HTMLInputElement> & {
-  label: string
-  error?: string
-}
+  label: string;
+  error?: string;
+};
 
 export default function PasswordField({ label, error, ...rest }: Props) {
-  const [show, setShow] = useState(false)
+  const [show, setShow] = useState(false);
   return (
     <div className="space-y-1">
-      <label className="block text-sm font-medium text-[rgb(var(--muted-foreground-rgb))]">{label}</label>
+      <label className="block text-sm font-medium text-[rgb(var(--muted-foreground-rgb))]">
+        {label}
+      </label>
       <div className="relative">
         <span className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2">
           <Lock className="h-4 w-4 opacity-70" />
@@ -30,5 +32,5 @@ export default function PasswordField({ label, error, ...rest }: Props) {
       </div>
       {error && <p className="text-sm text-[var(--destructive)]">{error}</p>}
     </div>
-  )
+  );
 }

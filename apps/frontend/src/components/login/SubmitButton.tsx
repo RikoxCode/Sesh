@@ -1,9 +1,9 @@
-import { Loader2, LogIn } from 'lucide-react'
+import { Loader2, LogIn } from 'lucide-react';
 
 type Props = {
-  loading?: boolean
-  children: React.ReactNode
-}
+  loading?: boolean;
+  children: React.ReactNode;
+};
 
 export default function SubmitButton({ loading, children }: Props) {
   return (
@@ -15,5 +15,5 @@ export default function SubmitButton({ loading, children }: Props) {
       {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : <LogIn className="h-4 w-4" />}
       <span>{children}</span>
     </button>
-  )
+  );
 }
