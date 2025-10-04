@@ -2,11 +2,15 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 
 class UserSubCriterion extends Model
 {
+    /** @use HasFactory<\Database\Factories\UserSubCriterionFactory> */
+    use HasFactory;
+
     protected $fillable = [
         'sub_criteria_id',
         'user_id',

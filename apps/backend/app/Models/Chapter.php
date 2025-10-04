@@ -2,11 +2,15 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 
 class Chapter extends Model
 {
+    /** @use HasFactory<\Database\Factories\ChapterFactory> */
+    use HasFactory;
+
     protected $fillable = [
         'project_id',
         'type',

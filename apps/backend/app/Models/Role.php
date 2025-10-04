@@ -2,11 +2,15 @@
 
 namespace App\Models;
 
-use Spatie\Permission\Models\Permission as SpatiePermission;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Spatie\Permission\Models\Role as SpatieRole;
 use Illuminate\Support\Str;
 
-class Role extends SpatiePermission
+class Role extends SpatieRole
 {
+    /** @use HasFactory<\Database\Factories\RoleFactory> */
+    use HasFactory;
+
     protected $keyType = 'string';
     public $incrementing = false;
 

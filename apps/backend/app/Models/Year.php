@@ -2,11 +2,15 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 
 class Year extends Model
 {
+    /** @use HasFactory<\Database\Factories\YearFactory> */
+    use HasFactory;
+
     protected $fillable = [
         'year',
         'is_active',
