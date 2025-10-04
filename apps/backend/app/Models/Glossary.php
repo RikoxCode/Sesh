@@ -7,6 +7,12 @@ use Illuminate\Support\Str;
 
 class Glossary extends Model
 {
+    protected $fillable = [
+        'project_id',
+        'term',
+        'definition',
+    ];
+
     protected $keyType = 'string';
     public $incrementing = false;
 

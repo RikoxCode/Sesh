@@ -7,6 +7,14 @@ use Illuminate\Support\Str;
 
 class Table extends Model
 {
+    protected $fillable = [
+        'section_id',
+        'position',
+        'heading',
+        'markdown_table',
+        'source',
+    ];
+
     protected $keyType = 'string';
     public $incrementing = false;
 

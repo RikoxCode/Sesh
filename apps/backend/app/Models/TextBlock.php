@@ -7,6 +7,14 @@ use Illuminate\Support\Str;
 
 class TextBlock extends Model
 {
+    protected $fillable = [
+        'section_id',
+        'position',
+        'heading',
+        'text',
+        'source',
+    ];
+
     protected $keyType = 'string';
     public $incrementing = false;
 

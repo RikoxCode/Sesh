@@ -7,6 +7,12 @@ use Illuminate\Support\Str;
 
 class UserMeta extends Model
 {
+    protected $fillable = [
+        'user_id',
+        'meta_key',
+        'meta_value',
+    ];
+
     protected $keyType = 'string';
     public $incrementing = false;
 

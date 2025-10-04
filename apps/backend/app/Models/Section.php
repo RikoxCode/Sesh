@@ -7,6 +7,15 @@ use Illuminate\Support\Str;
 
 class Section extends Model
 {
+    protected $fillable = [
+        'chapter_id',
+        'parent_id',
+        'position',
+        'title',
+        'subtitle',
+        'rating_checksum',
+    ];
+
     protected $keyType = 'string';
     public $incrementing = false;
 

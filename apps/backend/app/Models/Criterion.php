@@ -7,6 +7,13 @@ use Illuminate\Support\Str;
 
 class Criterion extends Model
 {
+    protected $fillable = [
+        'year_id',
+        'title',
+        'description',
+        'special_for_project_id',
+    ];
+
     protected $keyType = 'string';
     public $incrementing = false;
 

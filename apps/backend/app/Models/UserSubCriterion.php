@@ -7,6 +7,12 @@ use Illuminate\Support\Str;
 
 class UserSubCriterion extends Model
 {
+    protected $fillable = [
+        'sub_criteria_id',
+        'user_id',
+        'is_fulfilled',
+    ];
+
     protected $keyType = 'string';
     public $incrementing = false;
 

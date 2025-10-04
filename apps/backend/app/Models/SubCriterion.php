@@ -7,6 +7,11 @@ use Illuminate\Support\Str;
 
 class SubCriterion extends Model
 {
+    protected $fillable = [
+        'criteria_id',
+        'description',
+    ];
+
     protected $keyType = 'string';
     public $incrementing = false;
 

@@ -7,6 +7,14 @@ use Illuminate\Support\Str;
 
 class TimeBlock extends Model
 {
+    protected $fillable = [
+        'project_id',
+        'description',
+        'is_chore',
+        'start_time',
+        'end_time',
+    ];
+
     protected $keyType = 'string';
     public $incrementing = false;
 

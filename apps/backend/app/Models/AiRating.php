@@ -7,6 +7,13 @@ use Illuminate\Support\Str;
 
 class AiRating extends Model
 {
+    protected $fillable = [
+        'section_id',
+        'rating',
+        'rating_description',
+        'rating_checksum',
+    ];
+
     protected $keyType = 'string';
     public $incrementing = false;
 
