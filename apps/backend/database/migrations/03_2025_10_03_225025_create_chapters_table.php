@@ -13,7 +13,7 @@ return new class extends Migration {
         Schema::create('chapters', function (Blueprint $table) {
             $table->char('id', 36)->primary();
             $table->char('project_id', 36);
-            $table->integer('position');
+            $table->integer('position')->default(0);
             $table->string('type');
             $table->string('title');
             $table->text('subtitle');
