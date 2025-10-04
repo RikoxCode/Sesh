@@ -8,7 +8,13 @@
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "typecheck": "tsc --noEmit -p tsconfig.app.json"
+    "precommit": "npm run -s eslint:check && npm run -s typecheck && npm run -s prettier:check",
+    "eslint:check": "eslint .",
+    "eslint:fix": "eslint . --fix",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "prettier:check": "prettier -c .",
+    "prettier:fix": "prettier -w .",
+    "test": "vitest run -r"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.57.4",
