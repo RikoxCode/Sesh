@@ -3,9 +3,17 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class Chapter extends Model
 {
+    protected $fillable = [
+        'project_id',
+        'type',
+        'title',
+        'subtitle',
+    ];
+
     protected $keyType = 'string';
     public $incrementing = false;
 
