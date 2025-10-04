@@ -85,4 +85,13 @@ class Project extends Model
     {
         return $this->hasMany(Criterion::class, 'special_for_project_id');
     }
+
+    public function isOwnedByUser()
+    {
+        if ($this->owner_id == auth()->user()['id']) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

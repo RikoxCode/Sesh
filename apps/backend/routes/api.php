@@ -3,7 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\ProjectController;
+use App\Http\Controllers\AppController;
 
 $tables = [
     'ai_ratings',
@@ -64,11 +64,10 @@ foreach ($tables as $table) {
         });
 }
 
-
 Route::middleware('jwt')
-    ->prefix('project')
+    ->prefix('app')
     ->group(function () {
-        Route::post('/create', [ProjectController::class, 'createProject']);
+        Route::get('/projects/{project}', [AppController::class, 'getProject']);
     });
 
 
