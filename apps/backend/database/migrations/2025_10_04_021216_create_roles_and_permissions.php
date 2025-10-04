@@ -41,7 +41,6 @@ return new class extends Migration {
             $view_users,
             $manage_years,
             $manage_criteria,
-            $manage_years,
         );
         $admin_role->givePermissionTo(\App\Models\Permission::all());
     }
