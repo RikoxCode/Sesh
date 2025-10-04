@@ -14,7 +14,7 @@ import {
   UserCircle2,
 } from 'lucide-react';
 
-const items: NavItem[] = [
+const navItems: NavItem[] = [
   { key: RouteKey.Dashboard, label: 'Dashboard', icon: LayoutDashboard },
   { key: RouteKey.Daily, label: 'Daily', icon: Info },
   { key: RouteKey.Users, label: 'User', icon: Users },
@@ -24,104 +24,80 @@ const items: NavItem[] = [
   { key: RouteKey.Sections, label: 'Edit Sections', icon: SlidersHorizontal },
 ];
 
-const Sidebar: FC<SidebarProps> = ({ active, onNavigate }) => {
+const baseItem =
+  'w-full flex items-center gap-3 rounded-lg px-3 py-2 text-sm transition-[background,color] duration-150 focus:outline-none ' +
+  'focus-visible:ring-2 focus-visible:ring-[var(--ring-color)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--ring-offset)]';
+
+const labelShow =
+  'pointer-events-none origin-left scale-0 opacity-0 transition-all duration-200 group-hover:scale-100 group-hover:opacity-100';
+
+const Sidebar: FC<SidebarProps> = ({ active, onNavigate, logoUrl = '/images/logo.png', user }) => {
+  const userName = user?.name ?? 'Gianluca Barbieri';
+  const userRole = user?.role ?? 'Lernender';
+
+  const renderItem = ({ key, label, icon: Icon, sublabel }: NavItem) => {
+    const isActive = active === key;
+    return (
+      <button
+        key={key}
+        onClick={() => onNavigate?.(key)}
+        title={label}
+        aria-current={isActive ? 'page' : undefined}
+        className={
+          baseItem +
+          ' ' +
+          (isActive
+            ? 'bg-[var(--primary)] text-white'
+            : 'bg-transparent text-white/90 hover:bg-[var(--primary-hover)] hover:text-white')
+        }
+      >
+        <Icon className="h-5 w-5 shrink-0" />
+        <div className={`${labelShow} text-left`}>
+          <div>{label}</div>
+          {sublabel && <div className="text-xs text-white/80">{sublabel}</div>}
+        </div>
+      </button>
+    );
+  };
+
   return (
     <aside
       className="group fixed left-0 top-0 z-50 h-screen w-16
-                 bg-[var(--accent)] text-[var(--card-foreground)]
-                 border-r border-[var(--border)]
-                 transition-[width] duration-200 hover:w-64"
-      aria-label="Sesh Sidebar"
-      aria-expanded={false}
+             bg-[var(--primary-background)]
+             text-[rgb(var(--card-foreground-rgb))]
+             border-r border-[rgb(var(--border-rgb))]
+             transition-[width] duration-200 hover:w-64"
     >
-      <div className="flex h-full flex-col">
+      <div className="flex h-full flex-col text-white">
         {/* Brand */}
-        <div className="flex items-center gap-3 px-3 py-4">
-          <div className="grid h-10 w-10 place-items-center rounded-lg border border-[var(--border)] bg-[var(--card)]">
-            <span className="text-lg font-bold text-[var(--primary)]">S</span>
+        <button className={baseItem + ' px-3 py-4'}>
+          <div className="grid h-10 w-10 place-items-center rounded-lg overflow-hidden shrink-0">
+            <img
+              src={logoUrl} // /images/logo.png aus /public
+              alt="Sesh Logo"
+              className="block h-10 w-10 object-contain select-none pointer-events-none"
+            />
           </div>
-          <span
-            className="pointer-events-none origin-left scale-0 opacity-0
-                       transition-all duration-200
-                       group-hover:scale-100 group-hover:opacity-100
-                       text-xl font-semibold"
-          >
-            Sesh
-          </span>
-        </div>
+          <div className={`${labelShow} text-left text-xl font-bold`}>
+            <div>Sesh</div>
+          </div>
+        </button>
 
-        <div className="mx-3 mb-2 hidden h-px bg-[var(--border)] group-hover:block" />
+        {/* Main nav */}
+        <nav className="flex-1 space-y-1 px-2">{navItems.map((it) => renderItem(it))}</nav>
 
-        {/* Nav */}
-        <nav className="flex-1 space-y-1 px-2">
-          {items.map(({ key, label, icon: Icon }) => {
-            const isActive = active === key;
-            return (
-              <button
-                key={key}
-                onClick={() => onNavigate?.(key)}
-                className={[
-                  'w-full flex items-center gap-3 rounded-lg px-3 py-2 text-sm',
-                  'transition-[background,color] duration-150 focus:outline-none',
-                  'focus-visible:ring-2 focus-visible:ring-[var(--ring-color)]',
-                  'focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--ring-offset)]',
-                  isActive
-                    ? 'bg-[var(--primary)] text-white'
-                    : 'bg-transparent text-[var(--card-foreground)] hover:bg-[var(--primary-hover)] hover:text-white',
-                ].join(' ')}
-                aria-current={isActive ? 'page' : undefined}
-                aria-label={label}
-              >
-                <Icon className="h-5 w-5 shrink-0" />
-                <span
-                  className="pointer-events-none origin-left scale-0 opacity-0
-                             transition-all duration-200
-                             group-hover:scale-100 group-hover:opacity-100"
-                >
-                  {label}
-                </span>
-              </button>
-            );
+        {/* Bottom actions */}
+        <div className="px-2 pb-3 pt-2 space-y-1">
+          {/* Settings as selectable item */}
+          {renderItem({ key: RouteKey.Settings, label: 'Settings', icon: Settings })}
+
+          {/* Profile as normal item (kein Card) */}
+          {renderItem({
+            key: RouteKey.Profile,
+            label: userName,
+            sublabel: userRole,
+            icon: UserCircle2,
           })}
-        </nav>
-
-        {/* Bottom area */}
-        <div className="px-2 pb-3 pt-2 space-y-2">
-          <button
-            onClick={() => onNavigate?.(RouteKey.Settings)}
-            className="w-full flex items-center gap-3 rounded-lg px-3 py-2 text-sm
-                       transition-[background,color] duration-150
-                       hover:bg-[var(--overlay-12)]
-                       focus:outline-none focus-visible:ring-2
-                       focus-visible:ring-[var(--ring-color)]
-                       focus-visible:ring-offset-2
-                       focus-visible:ring-offset-[var(--ring-offset)]"
-            aria-label="Settings"
-          >
-            <Settings className="h-5 w-5" />
-            <span
-              className="pointer-events-none origin-left scale-0 opacity-0
-                         transition-all duration-200
-                         group-hover:scale-100 group-hover:opacity-100"
-            >
-              Settings
-            </span>
-          </button>
-
-          <div
-            className="flex items-center gap-3 rounded-lg border border-[var(--border)]
-                       bg-[var(--card)] px-3 py-2"
-            aria-label="Profile"
-          >
-            <UserCircle2 className="h-8 w-8 text-[var(--accent)]" />
-            <div
-              className="pointer-events-none origin-left hidden flex-col text-left text-xs leading-tight
-                         group-hover:flex"
-            >
-              <span className="font-medium text-[var(--card-foreground)]">Gianluca Barbieri</span>
-              <span className="text-[var(--muted-foreground)]">Lernender</span>
-            </div>
-          </div>
         </div>
       </div>
     </aside>
