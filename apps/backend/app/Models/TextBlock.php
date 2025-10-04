@@ -11,13 +11,7 @@ class TextBlock extends Model
     /** @use HasFactory<\Database\Factories\TextBlockFactory> */
     use HasFactory;
 
-    protected $fillable = [
-        'section_id',
-        'position',
-        'heading',
-        'text',
-        'source',
-    ];
+    protected $fillable = ['section_id', 'position', 'heading', 'text', 'source'];
 
     protected $keyType = 'string';
     public $incrementing = false;

@@ -11,11 +11,7 @@ class UserSubCriterion extends Model
     /** @use HasFactory<\Database\Factories\UserSubCriterionFactory> */
     use HasFactory;
 
-    protected $fillable = [
-        'sub_criteria_id',
-        'user_id',
-        'is_fulfilled',
-    ];
+    protected $fillable = ['sub_criteria_id', 'user_id', 'is_fulfilled'];
 
     protected $keyType = 'string';
     public $incrementing = false;

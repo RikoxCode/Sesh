@@ -2,8 +2,7 @@
 
 use Illuminate\Database\Migrations\Migration;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
@@ -29,16 +28,26 @@ return new class extends Migration
         $manage_criteria = \App\Models\Permission::create(['name' => 'manage criteria']);
 
         $apprentice_role->givePermissionTo($edit_projects, $view_criteria);
-        $mentor_role->givePermissionTo($create_projects, $view_projects, $view_users, $view_years, $view_criteria, $manage_criteria);
-        $supervisor_role->givePermissionTo($manage_projects, $view_users, $manage_years, $manage_criteria, $manage_years);
+        $mentor_role->givePermissionTo(
+            $create_projects,
+            $view_projects,
+            $view_users,
+            $view_years,
+            $view_criteria,
+            $manage_criteria,
+        );
+        $supervisor_role->givePermissionTo(
+            $manage_projects,
+            $view_users,
+            $manage_years,
+            $manage_criteria,
+            $manage_years,
+        );
         $admin_role->givePermissionTo(\App\Models\Permission::all());
     }
 
     /**
      * Reverse the migrations.
      */
-    public function down(): void
-    {
-
-    }
+    public function down(): void {}
 };

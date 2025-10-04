@@ -11,12 +11,7 @@ class Chapter extends Model
     /** @use HasFactory<\Database\Factories\ChapterFactory> */
     use HasFactory;
 
-    protected $fillable = [
-        'project_id',
-        'type',
-        'title',
-        'subtitle',
-    ];
+    protected $fillable = ['project_id', 'type', 'title', 'subtitle'];
 
     protected $keyType = 'string';
     public $incrementing = false;

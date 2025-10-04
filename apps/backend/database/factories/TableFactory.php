@@ -29,7 +29,8 @@ class TableFactory extends Factory
             'section_id' => Section::factory(),
             'position' => $this->faker->numberBetween(1, 10),
             'heading' => $this->faker->sentence(3),
-            'markdown_table' => '| Header 1 | Header 2 |\n|----------|----------|\n| Cell 1   | Cell 2   |',
+            'markdown_table' =>
+                '| Header 1 | Header 2 |\n|----------|----------|\n| Cell 1   | Cell 2   |',
             'source' => $this->faker->url(),
         ];
     }

@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use App\Models\Project;
 use App\Models\Chapter;
 
-
 class ProjectController extends Controller
 {
     public function createProject(Request $request)
@@ -40,7 +39,9 @@ class ProjectController extends Controller
             $chapter->save();
         }
 
-
-        return response()->json(['message' => 'Project created successfully', 'project' => $project], 201);
+        return response()->json(
+            ['message' => 'Project created successfully', 'project' => $project],
+            201,
+        );
     }
 }

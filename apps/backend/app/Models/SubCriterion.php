@@ -11,10 +11,7 @@ class SubCriterion extends Model
     /** @use HasFactory<\Database\Factories\SubCriterionFactory> */
     use HasFactory;
 
-    protected $fillable = [
-        'criteria_id',
-        'description',
-    ];
+    protected $fillable = ['criteria_id', 'description'];
 
     protected $keyType = 'string';
     public $incrementing = false;

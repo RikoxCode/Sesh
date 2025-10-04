@@ -27,17 +27,9 @@ class User extends Authenticatable implements JWTSubject
         });
     }
 
-    protected $fillable = [
-        'first_name',
-        'last_name',
-        'email',
-        'password',
-    ];
+    protected $fillable = ['first_name', 'last_name', 'email', 'password'];
 
-    protected $hidden = [
-        'password',
-        'remember_token',
-    ];
+    protected $hidden = ['password', 'remember_token'];
 
     protected function casts()
     {

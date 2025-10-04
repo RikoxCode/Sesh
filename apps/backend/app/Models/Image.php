@@ -11,13 +11,7 @@ class Image extends Model
     /** @use HasFactory<\Database\Factories\ImageFactory> */
     use HasFactory;
 
-    protected $fillable = [
-        'section_id',
-        'position',
-        'image_data',
-        'description',
-        'source',
-    ];
+    protected $fillable = ['section_id', 'position', 'image_data', 'description', 'source'];
 
     protected $keyType = 'string';
     public $incrementing = false;

@@ -11,11 +11,7 @@ class Glossary extends Model
     /** @use HasFactory<\Database\Factories\GlossaryFactory> */
     use HasFactory;
 
-    protected $fillable = [
-        'project_id',
-        'term',
-        'definition',
-    ];
+    protected $fillable = ['project_id', 'term', 'definition'];
 
     protected $keyType = 'string';
     public $incrementing = false;

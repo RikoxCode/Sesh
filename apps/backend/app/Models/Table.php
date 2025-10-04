@@ -11,13 +11,7 @@ class Table extends Model
     /** @use HasFactory<\Database\Factories\TableFactory> */
     use HasFactory;
 
-    protected $fillable = [
-        'section_id',
-        'position',
-        'heading',
-        'markdown_table',
-        'source',
-    ];
+    protected $fillable = ['section_id', 'position', 'heading', 'markdown_table', 'source'];
 
     protected $keyType = 'string';
     public $incrementing = false;

@@ -11,10 +11,7 @@ class Year extends Model
     /** @use HasFactory<\Database\Factories\YearFactory> */
     use HasFactory;
 
-    protected $fillable = [
-        'year',
-        'is_active',
-    ];
+    protected $fillable = ['year', 'is_active'];
 
     protected $keyType = 'string';
     public $incrementing = false;

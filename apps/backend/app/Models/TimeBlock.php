@@ -11,13 +11,7 @@ class TimeBlock extends Model
     /** @use HasFactory<\Database\Factories\TimeBlockFactory> */
     use HasFactory;
 
-    protected $fillable = [
-        'project_id',
-        'description',
-        'is_chore',
-        'start_time',
-        'end_time',
-    ];
+    protected $fillable = ['project_id', 'description', 'is_chore', 'start_time', 'end_time'];
 
     protected $keyType = 'string';
     public $incrementing = false;

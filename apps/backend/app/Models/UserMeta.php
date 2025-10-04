@@ -11,11 +11,7 @@ class UserMeta extends Model
     /** @use HasFactory<\Database\Factories\UserMetaFactory> */
     use HasFactory;
 
-    protected $fillable = [
-        'user_id',
-        'meta_key',
-        'meta_value',
-    ];
+    protected $fillable = ['user_id', 'meta_key', 'meta_value'];
 
     protected $keyType = 'string';
     public $incrementing = false;

@@ -11,12 +11,7 @@ class AiRating extends Model
     /** @use HasFactory<\Database\Factories\AiRatingFactory> */
     use HasFactory;
 
-    protected $fillable = [
-        'section_id',
-        'rating',
-        'rating_description',
-        'rating_checksum',
-    ];
+    protected $fillable = ['section_id', 'rating', 'rating_description', 'rating_checksum'];
 
     protected $keyType = 'string';
     public $incrementing = false;

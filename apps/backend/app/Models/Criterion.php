@@ -11,12 +11,7 @@ class Criterion extends Model
     /** @use HasFactory<\Database\Factories\CriterionFactory> */
     use HasFactory;
 
-    protected $fillable = [
-        'year_id',
-        'title',
-        'description',
-        'special_for_project_id',
-    ];
+    protected $fillable = ['year_id', 'title', 'description', 'special_for_project_id'];
 
     protected $keyType = 'string';
     public $incrementing = false;
