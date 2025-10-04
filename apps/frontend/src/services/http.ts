@@ -45,6 +45,50 @@ export const http = {
 
     return (await res.json()) as T;
   },
+
+  async put<T = unknown>(path: string, body?: unknown, init?: RequestInit): Promise<T> {
+    const base = import.meta.env.VITE_API_URL ?? '';
+    const token = localStorage.getItem('sesh_token');
+
+    const res = await fetch(base + path, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        ...(token ? { Authorization: `Bearer ${token}` } : {}),
+        ...(init?.headers || {}),
+      },
+      body: JSON.stringify(body ?? {}),
+      ...init,
+    });
+
+    if (!res.ok) {
+      await handleErrorResponse(res);
+    }
+
+    return (await res.json()) as T;
+  },
+
+  async delete<T = unknown>(path: string, init?: RequestInit): Promise<T> {
+    const base = import.meta.env.VITE_API_URL ?? '';
+    const token = localStorage.getItem('sesh_token');
+
+    const res = await fetch(base + path, {
+      method: 'DELETE',
+      headers: {
+        ...(token ? { Authorization: `Bearer ${token}` } : {}),
+        ...(init?.headers || {}),
+      },
+      ...init,
+    });
+
+    if (!res.ok) {
+      await handleErrorResponse(res);
+    }
+
+    // DELETE kann leere Response haben
+    const text = await res.text();
+    return (text ? JSON.parse(text) : {}) as T;
+  },
 };
 
 async function handleErrorResponse(res: Response): Promise<never> {
