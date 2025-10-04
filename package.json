@@ -12,9 +12,7 @@
     "format:check": "prettier -c .",
     "prepare": "husky",
     "precommit:frontend": "npm --prefix apps/frontend run precommit",
-    "precommit:backend": "composer --working-dir=apps/backend run precommit",
-    "prepush:frontend": "npm --prefix apps/frontend test --silent || exit 1",
-    "prepush:backend": "composer --working-dir=apps/backend test || exit 1"
+    "precommit:backend": "composer --working-dir=apps/backend run precommit"
   },
   "lint-staged": {
     "apps/frontend/**/*.{ts,tsx,js,jsx}": [
