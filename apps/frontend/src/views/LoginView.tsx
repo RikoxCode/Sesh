@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useNavigate } from '@tanstack/react-router'
 import { useAuthStore } from '../stores/authStore'
 import Brand from '../components/login/Brand'
 import TextField from '../components/ui/TextField'
@@ -9,7 +10,7 @@ import ThemeToggle from '../components/ui/ThemeToggle'
 
 export default function LoginView() {
   const login = useAuthStore((s) => s.login)
-
+  const navigate = useNavigate()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
@@ -19,11 +20,12 @@ export default function LoginView() {
     e.preventDefault()
     setError('')
     setLoading(true)
+
     try {
       await login(email, password)
-      window.location.href = '/'
+      navigate({ to: '/' })
     } catch (err) {
-      setError('Login fehlgeschlagen. Bitte überprüfe deine Anmeldedaten.')
+      setError(err instanceof Error ? err.message : 'Login fehlgeschlagen. Bitte überprüfe deine Anmeldedaten.')
     } finally {
       setLoading(false)
     }
@@ -34,12 +36,10 @@ export default function LoginView() {
       <div className="absolute right-4 top-4">
         <ThemeToggle />
       </div>
-
       <div className="w-full max-w-md">
         <div className="mb-8 text-center">
           <Brand />
         </div>
-
         <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-6 shadow-sm">
           <form onSubmit={handleSubmit} className="space-y-4">
             <TextField
@@ -51,7 +51,6 @@ export default function LoginView() {
               placeholder="you@sesh.app"
               autoComplete="email"
             />
-
             <PasswordField
               label="Passwort"
               value={password}
@@ -60,9 +59,7 @@ export default function LoginView() {
               placeholder="••••••••"
               autoComplete="current-password"
             />
-
             <FormError message={error} />
-
             <SubmitButton loading={loading}>Anmelden</SubmitButton>
           </form>
         </div>

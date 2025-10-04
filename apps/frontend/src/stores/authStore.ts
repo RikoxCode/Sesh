@@ -11,12 +11,13 @@ interface AuthState {
 export const useAuthStore = create<AuthState>((set) => ({
   isAuthenticated: !!localStorage.getItem('sesh_token'),
   token: localStorage.getItem('sesh_token'),
+  
   async login(email, password) {
-    // TODO: später echten API-Call in services/auth aktivieren
     const token = await authService.login(email, password)
     localStorage.setItem('sesh_token', token)
     set({ isAuthenticated: true, token })
   },
+  
   logout() {
     localStorage.removeItem('sesh_token')
     set({ isAuthenticated: false, token: null })
