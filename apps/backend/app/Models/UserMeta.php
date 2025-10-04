@@ -2,10 +2,18 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Str;
 
 class UserMeta extends Model
 {
+    /** @use HasFactory<\Database\Factories\UserMetaFactory> */
+    use HasFactory;
+
+    protected $fillable = ['user_id', 'meta_key', 'meta_value'];
+
     protected $keyType = 'string';
     public $incrementing = false;
 
@@ -16,5 +24,12 @@ class UserMeta extends Model
                 $userMeta->id = (string) Str::uuid();
             }
         });
+    }
+
+    // Relationships
+
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
     }
 }

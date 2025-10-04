@@ -11,6 +11,16 @@ use Tymon\JWTAuth\Exceptions\JWTException;
 
 class AuthController extends Controller
 {
+    private function getRole()
+    {
+        $user = Auth::user();
+        if (!$user) {
+            return response()->json(['error' => 'User not found'], 404);
+        }
+
+        $role = $user->getRoleNames();
+        return response()->json(['role' => $role]);
+    }
     public function register(Request $request)
     {
         $request->validate([
@@ -33,10 +43,13 @@ class AuthController extends Controller
             return response()->json(['error' => 'Could not create token'], 500);
         }
 
-        return response()->json([
-            'token' => $token,
-            'user' => $user,
-        ], 201);
+        return response()->json(
+            [
+                'token' => $token,
+                'user' => $user,
+            ],
+            201,
+        );
     }
 
     public function login(Request $request)
@@ -44,7 +57,7 @@ class AuthController extends Controller
         $credentials = $request->only('email', 'password');
 
         try {
-            if (!$token = JWTAuth::attempt($credentials)) {
+            if (!($token = JWTAuth::attempt($credentials))) {
                 return response()->json(['error' => 'Invalid credentials'], 401);
             }
         } catch (JWTException $e) {
@@ -75,7 +88,12 @@ class AuthController extends Controller
             if (!$user) {
                 return response()->json(['error' => 'User not found'], 404);
             }
-            return response()->json($user);
+            $role = $user->getRoleNames();
+
+            return response()->json([
+                'user' => $user,
+                'role' => $role
+            ]);
         } catch (JWTException $e) {
             return response()->json(['error' => 'Failed to fetch user profile'], 500);
         }

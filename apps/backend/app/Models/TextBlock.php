@@ -2,10 +2,18 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Str;
 
 class TextBlock extends Model
 {
+    /** @use HasFactory<\Database\Factories\TextBlockFactory> */
+    use HasFactory;
+
+    protected $fillable = ['section_id', 'position', 'heading', 'text', 'source'];
+
     protected $keyType = 'string';
     public $incrementing = false;
 
@@ -16,5 +24,12 @@ class TextBlock extends Model
                 $textBlock->id = (string) Str::uuid();
             }
         });
+    }
+
+    // Relationships
+
+    public function section(): BelongsTo
+    {
+        return $this->belongsTo(Section::class);
     }
 }

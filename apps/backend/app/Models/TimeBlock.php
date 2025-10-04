@@ -2,10 +2,18 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Str;
 
 class TimeBlock extends Model
 {
+    /** @use HasFactory<\Database\Factories\TimeBlockFactory> */
+    use HasFactory;
+
+    protected $fillable = ['project_id', 'description', 'is_chore', 'start_time', 'end_time'];
+
     protected $keyType = 'string';
     public $incrementing = false;
 
@@ -16,5 +24,12 @@ class TimeBlock extends Model
                 $timeBlock->id = (string) Str::uuid();
             }
         });
+    }
+
+    // Relationships
+
+    public function project(): BelongsTo
+    {
+        return $this->belongsTo(Project::class);
     }
 }
