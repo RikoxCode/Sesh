@@ -1,11 +1,3 @@
 #!/usr/bin/env sh
-set -euo pipefail
 
-echo "[pre-push] format check (root)"
-if ! npm run -s format:check; then
-  echo "[pre-push] applying prettier fixes"
-  npm run -s format
-  git add -A
-  echo "[pre-push] formatting applied. commit and push again."
-  exit 1
-fi
+npm run test --workspaces=false || exit 1
