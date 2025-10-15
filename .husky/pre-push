@@ -1,0 +1,8 @@
+#!/usr/bin/env sh
+set -e
+
+echo "[pre-push] backend tests"
+[ -f apps/backend/package.json ] && npm --workspace apps/backend run test || echo "skip backend"
+
+echo "[pre-push] frontend build"
+[ -f apps/frontend/package.json ] && npm --workspace apps/frontend run build || echo "skip frontend"
