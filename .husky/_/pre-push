@@ -1,6 +1,2 @@
 #!/usr/bin/env sh
-. "$(dirname -- "$0")/husky.sh"
-
-echo "[pre-push] Running tests..."
-npm run test --workspaces=false || exit 1
-echo "[pre-push] Tests completed
+. "$(dirname "$0")/h"
