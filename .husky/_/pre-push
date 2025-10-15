@@ -1,3 +1,2 @@
 #!/usr/bin/env sh
-
-npm run test --workspaces=false || exit 1
+. "$(dirname "$0")/h"

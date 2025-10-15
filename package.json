@@ -8,6 +8,8 @@
   "license": "MIT",
   "scripts": {
     "prepare": "husky",
+    "format": "prettier --write .",
+    "lint": "eslint . --fix",
     "lint-staged": "lint-staged"
   },
   "lint-staged": {
