@@ -1,0 +1,301 @@
+// ==========================================
+// PRISMA SCHEMA - SESH PROJECT
+// ==========================================
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ==========================================
+// BEST PRACTICES ANGEWENDET:
+// - CUID statt UUID (kürzer, sortierbar, URL-safe)
+// - createdAt/updatedAt überall
+// - Indexes für Performance
+// - Cascading Deletes wo sinnvoll
+// - Sprechende Relationen
+// ==========================================
+
+// ==========================================
+// USER MANAGEMENT
+// ==========================================
+
+model User {
+  id           String   @id @default(cuid())
+  firstName    String   @map("first_name")
+  lastName     String   @map("last_name")
+  abbreviation String   @unique
+  email        String   @unique
+  password     String
+  roleId       String   
+  
+  // Relations
+  role             Role              @relation(fields: [roleId], references: [id], onDelete: Restrict)
+  userMeta         UserMeta[]
+  //projects         Project[]
+  //userSubCriteria  UserSubCriteria[]
+  
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@index([email])
+  @@index([abbreviation])
+  @@index([roleId])
+  @@map("users")
+}
+
+
+model Role {
+  id   String @id @default(cuid())
+  name String @unique
+  
+  // Relations
+  users User[]
+  
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("roles")
+}
+
+model UserMeta {
+  id        String @id @default(cuid())
+  userId    String @map("user_id")
+  metaKey   String @map("meta_key")
+  metaValue String @map("meta_value")
+  
+  // Relations
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@index([userId])
+  @@index([metaKey])
+  @@map("user_meta")
+}
+
+// ==========================================
+// YEAR & PROJECT MANAGEMENT
+// ==========================================
+/*
+model Year {
+  id       String  @id @default(cuid())
+  year     Int     @unique
+  isActive Boolean @default(false) @map("is_active")
+  
+  // Relations
+  projects Project[]
+  criteria Criteria[]
+  
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@index([year])
+  @@index([isActive])
+  @@map("years")
+}
+
+model Project {
+  id          String   @id @default(cuid())
+  yearId      String   @map("year_id")
+  ownerId     String   @map("owner_id")
+  name        String
+  startDate   DateTime @map("start_date") @db.Date
+  endDate     DateTime @map("end_date") @db.Date
+  description String   @db.Text
+  
+  // Relations
+  year       Year         @relation(fields: [yearId], references: [id], onDelete: Restrict)
+  owner      User         @relation(fields: [ownerId], references: [id], onDelete: Restrict)
+  timeBlocks TimeBlock[]
+  glossary   Glossary[]
+  criteria   Criteria[]
+  chapters   Chapter[]
+  
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@index([yearId])
+  @@index([ownerId])
+  @@index([startDate, endDate])
+  @@map("projects")
+}
+
+model TimeBlock {
+  id          String   @id @default(cuid())
+  projectId   String   @map("project_id")
+  description String
+  isChore     Boolean  @default(false) @map("is_chore")
+  startTime   DateTime @map("start_time")
+  endTime     DateTime @map("end_time")
+  
+  // Relations
+  project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@index([projectId])
+  @@index([startTime, endTime])
+  @@map("time_blocks")
+}
+
+model Glossary {
+  id         String @id @default(cuid())
+  projectId  String @map("project_id")
+  term       String
+  definition String @db.Text
+  
+  // Relations
+  project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@index([projectId])
+  @@index([term])
+  @@map("glossary")
+}
+
+// ==========================================
+// CRITERIA MANAGEMENT
+// ==========================================
+
+model Criteria {
+  id                   String  @id @default(uuid()) @db.Char(36)
+  yearId               String  @map("year_id") @db.Char(36)
+  title                String
+  description          String  @db.Text
+  specialForProjectId  String? @map("special_for_project_id") @db.Char(36)
+  
+  // Relations
+  year         Year          @relation(fields: [yearId], references: [id])
+  project      Project?      @relation(fields: [specialForProjectId], references: [id])
+  subCriteria  SubCriteria[]
+
+  @@map("criteria")
+}
+
+model SubCriteria {
+  id          String @id @default(uuid()) @db.Char(36)
+  criteriaId  String @map("criteria_id") @db.Char(36)
+  description String @db.Text
+  
+  // Relations
+  criteria         Criteria          @relation(fields: [criteriaId], references: [id], onDelete: Cascade)
+  userSubCriteria  UserSubCriteria[]
+
+  @@map("sub_criteria")
+}
+
+model UserSubCriteria {
+  id            String  @id @default(uuid()) @db.Char(36)
+  subCriteriaId String  @map("sub_criteria_id") @db.Char(36)
+  userId        String  @map("user_id") @db.Char(36)
+  isFulfilled   Boolean @default(false) @map("is_fulfilled")
+  
+  // Relations
+  subCriteria SubCriteria @relation(fields: [subCriteriaId], references: [id], onDelete: Cascade)
+  user        User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("user_sub_criteria")
+}
+
+// ==========================================
+// DOCUMENTATION STRUCTURE
+// ==========================================
+
+model Chapter {
+  id        String @id @default(uuid()) @db.Char(36)
+  projectId String @map("project_id") @db.Char(36)
+  type      String
+  title     String
+  subtitle  String @db.Text
+  
+  // Relations
+  project  Project   @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  sections Section[]
+
+  @@map("chapters")
+}
+
+model Section {
+  id             String  @id @default(uuid()) @db.Char(36)
+  chapterId      String  @map("chapter_id") @db.Char(36)
+  parentId       String? @map("parent_id") @db.Char(36)
+  position       Int
+  title          String
+  subtitle       String  @db.Text
+  ratingChecksum String? @map("rating_checksum")
+  
+  // Relations
+  chapter     Chapter      @relation(fields: [chapterId], references: [id], onDelete: Cascade)
+  parent      Section?     @relation("SectionHierarchy", fields: [parentId], references: [id], onDelete: Cascade)
+  children    Section[]    @relation("SectionHierarchy")
+  aiRatings   AiRating[]
+  textBlocks  TextBlock[]
+  images      Image[]
+  tables      Table[]
+
+  @@map("sections")
+}
+
+model AiRating {
+  id                 String @id @default(uuid()) @db.Char(36)
+  sectionId          String @map("section_id") @db.Char(36)
+  rating             Int
+  ratingDescription  String @map("rating_description")
+  ratingChecksum     String @map("rating_checksum")
+  
+  // Relations
+  section Section @relation(fields: [sectionId], references: [id], onDelete: Cascade)
+
+  @@map("ai_ratings")
+}
+
+model TextBlock {
+  id        String  @id @default(uuid()) @db.Char(36)
+  sectionId String  @map("section_id") @db.Char(36)
+  position  Int
+  heading   String?
+  text      String  @db.Text
+  source    String?
+  
+  // Relations
+  section Section @relation(fields: [sectionId], references: [id], onDelete: Cascade)
+
+  @@map("text_blocks")
+}
+
+model Image {
+  id          String  @id @default(uuid()) @db.Char(36)
+  sectionId   String  @map("section_id") @db.Char(36)
+  position    Int
+  imageData   Bytes   @map("image_data")
+  description String?
+  source      String?
+  
+  // Relations
+  section Section @relation(fields: [sectionId], references: [id], onDelete: Cascade)
+
+  @@map("images")
+}
+
+model Table {
+  id            String  @id @default(uuid()) @db.Char(36)
+  sectionId     String  @map("section_id") @db.Char(36)
+  position      Int
+  heading       String?
+  markdownTable String  @map("markdown_table") @db.Text
+  source        String?
+  
+  // Relations
+  section Section @relation(fields: [sectionId], references: [id], onDelete: Cascade)
+
+  @@map("tables")
+}*/
