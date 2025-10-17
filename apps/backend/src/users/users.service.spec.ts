@@ -28,8 +28,7 @@ jest.mock('./entities/user.entity', () => {
       Object.assign(this, user);
     }
     static withMetas = jest.fn(
-       
-      async (u: Partial<UserEntity>) => new UserEntity({ ...u, metas: [] }),
+      (u: Partial<UserEntity>) => new UserEntity({ ...u, metas: [] }),
     );
   }
   return { UserEntity };
