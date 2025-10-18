@@ -97,9 +97,10 @@ describe('YearsService', () => {
   });
 
   it('update() updates existing year fields', async () => {
-    const dto: UpdateYearDto = { id: 'y3', isActive: false };
+    const id = 'y3';
+    const dto: UpdateYearDto = { year: 2026, isActive: false };
     const updated = new YearEntity({
-      id: 'y3',
+      id,
       year: 2026,
       isActive: false,
       createdAt: now,
@@ -107,10 +108,10 @@ describe('YearsService', () => {
     });
     prisma.year.update.mockResolvedValue(updated);
 
-    await expect(service.update(dto)).resolves.toEqual(updated);
+    await expect(service.update(id, dto)).resolves.toEqual(updated);
     expect(prisma.year.update).toHaveBeenCalledWith({
-      where: { id: 'y3' },
-      data: { isActive: false },
+      where: { id },
+      data: dto,
     });
   });
 
