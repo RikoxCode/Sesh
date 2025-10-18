@@ -10,6 +10,8 @@ import { UsersModule } from './users/users.module';
 import { UsermetasModule } from './usermetas/usermetas.module';
 import { RolesModule } from './roles/roles.module';
 import { ProjectsModule } from './projects/projects.module';
+import { YearsService } from './years/years.service';
+import { YearsModule } from './years/years.module';
 @Module({
   imports: [
     PrismaModule,
@@ -17,8 +19,9 @@ import { ProjectsModule } from './projects/projects.module';
     UsermetasModule,
     RolesModule,
     ProjectsModule,
+    YearsModule,
   ],
   controllers: [AppController, UsersController],
-  providers: [AppService, PrismaService, UsersService],
+  providers: [AppService, PrismaService, UsersService, YearsService],
 })
 export class AppModule {}

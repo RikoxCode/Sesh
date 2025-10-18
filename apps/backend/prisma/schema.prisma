@@ -82,7 +82,6 @@ model UserMeta {
 // ==========================================
 // YEAR & PROJECT MANAGEMENT
 // ==========================================
-/*
 model Year {
   id       String  @id @default(cuid())
   year     Int     @unique
@@ -90,7 +89,7 @@ model Year {
   
   // Relations
   projects Project[]
-  criteria Criteria[]
+  //criteria Criteria[]
   
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
@@ -99,7 +98,7 @@ model Year {
   @@index([isActive])
   @@map("years")
 }
-*/
+
 model Project {
   id          String   @id @default(cuid())
   yearId      String   @map("year_id")
@@ -110,7 +109,7 @@ model Project {
   description String   @db.Text
   
   // Relations
-  //year       Year         @relation(fields: [yearId], references: [id], onDelete: Restrict)
+  year       Year         @relation(fields: [yearId], references: [id], onDelete: Restrict)
   owner      User         @relation(fields: [ownerId], references: [id], onDelete: Restrict)
   //timeBlocks TimeBlock[]
   //glossary   Glossary[]
@@ -123,7 +122,7 @@ model Project {
   @@index([yearId])
   @@index([ownerId])
   @@index([startDate, endDate])
-  //@@map("projects")
+  @@map("projects")
 }
 /*
 model TimeBlock {

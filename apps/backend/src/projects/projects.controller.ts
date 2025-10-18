@@ -48,7 +48,6 @@ export class ProjectsController {
 
   @Post()
   @ApiOperation({ summary: 'Create a project' })
-   
   @ApiBody({ type: CreateProjectDto })
   @ApiCreatedResponse({ type: ProjectEntity })
   @ApiBadRequestResponse({ description: 'Validation error' })
@@ -59,7 +58,6 @@ export class ProjectsController {
   @Patch(':id')
   @ApiOperation({ summary: 'Update a project' })
   @ApiParam({ name: 'id', required: true, description: 'Project ID' })
-   
   @ApiBody({ type: UpdateProjectDto })
   @ApiOkResponse({ type: ProjectEntity })
   @ApiNotFoundResponse({ description: 'Project not found' })
