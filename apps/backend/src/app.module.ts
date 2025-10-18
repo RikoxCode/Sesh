@@ -9,8 +9,15 @@ import { UsersController } from './users/users.controller';
 import { UsersModule } from './users/users.module';
 import { UsermetasModule } from './usermetas/usermetas.module';
 import { RolesModule } from './roles/roles.module';
+import { ProjectsModule } from './projects/projects.module';
 @Module({
-  imports: [PrismaModule, UsersModule, UsermetasModule, RolesModule],
+  imports: [
+    PrismaModule,
+    UsersModule,
+    UsermetasModule,
+    RolesModule,
+    ProjectsModule,
+  ],
   controllers: [AppController, UsersController],
   providers: [AppService, PrismaService, UsersService],
 })

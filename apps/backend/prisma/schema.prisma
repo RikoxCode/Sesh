@@ -36,7 +36,7 @@ model User {
   // Relations
   role             Role              @relation(fields: [roleId], references: [id], onDelete: Restrict)
   userMeta         UserMeta[]
-  //projects         Project[]
+  projects         Project[]
   //userSubCriteria  UserSubCriteria[]
   
   createdAt DateTime @default(now()) @map("created_at")
@@ -99,7 +99,7 @@ model Year {
   @@index([isActive])
   @@map("years")
 }
-
+*/
 model Project {
   id          String   @id @default(cuid())
   yearId      String   @map("year_id")
@@ -110,12 +110,12 @@ model Project {
   description String   @db.Text
   
   // Relations
-  year       Year         @relation(fields: [yearId], references: [id], onDelete: Restrict)
+  //year       Year         @relation(fields: [yearId], references: [id], onDelete: Restrict)
   owner      User         @relation(fields: [ownerId], references: [id], onDelete: Restrict)
-  timeBlocks TimeBlock[]
-  glossary   Glossary[]
-  criteria   Criteria[]
-  chapters   Chapter[]
+  //timeBlocks TimeBlock[]
+  //glossary   Glossary[]
+  //criteria   Criteria[]
+  //chapters   Chapter[]
   
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
@@ -123,9 +123,9 @@ model Project {
   @@index([yearId])
   @@index([ownerId])
   @@index([startDate, endDate])
-  @@map("projects")
+  //@@map("projects")
 }
-
+/*
 model TimeBlock {
   id          String   @id @default(cuid())
   projectId   String   @map("project_id")
