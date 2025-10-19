@@ -12,6 +12,7 @@ import { RolesModule } from './roles/roles.module';
 import { ProjectsModule } from './projects/projects.module';
 import { YearsService } from './years/years.service';
 import { YearsModule } from './years/years.module';
+import { GlossaryModule } from './glossary/glossary.module';
 @Module({
   imports: [
     PrismaModule,
@@ -20,6 +21,7 @@ import { YearsModule } from './years/years.module';
     RolesModule,
     ProjectsModule,
     YearsModule,
+    GlossaryModule,
   ],
   controllers: [AppController, UsersController],
   providers: [AppService, PrismaService, UsersService, YearsService],

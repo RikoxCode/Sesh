@@ -112,7 +112,7 @@ model Project {
   year       Year         @relation(fields: [yearId], references: [id], onDelete: Restrict)
   owner      User         @relation(fields: [ownerId], references: [id], onDelete: Restrict)
   //timeBlocks TimeBlock[]
-  //glossary   Glossary[]
+  glossary   Glossary[]
   //criteria   Criteria[]
   //chapters   Chapter[]
   
@@ -143,7 +143,7 @@ model TimeBlock {
   @@index([startTime, endTime])
   @@map("time_blocks")
 }
-
+*/
 model Glossary {
   id         String @id @default(cuid())
   projectId  String @map("project_id")
@@ -160,7 +160,7 @@ model Glossary {
   @@index([term])
   @@map("glossary")
 }
-
+/*
 // ==========================================
 // CRITERIA MANAGEMENT
 // ==========================================
